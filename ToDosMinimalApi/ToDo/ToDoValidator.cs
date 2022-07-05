@@ -1,0 +1,17 @@
+﻿using FluentValidation;
+
+namespace ToDosMinimalApi.ToDo
+{
+    public class ToDoValidator : AbstractValidator<ToDo>
+    {
+        public ToDoValidator()
+        {
+            RuleFor(t => t.Value)
+                .NotEmpty()
+                .MinimumLength(5)
+                .WithMessage("value of a todo must be atleast 5 characters");
+
+        }
+            
+    }
+}

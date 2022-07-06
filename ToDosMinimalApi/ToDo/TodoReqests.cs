@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ToDosMinimalApi.ToDo
 {
@@ -9,7 +10,8 @@ namespace ToDosMinimalApi.ToDo
             //app.MapGet("/todos", (IToDoService service) => service.GetAll()); // stare wywolanie endpoint
             app.MapGet("/todos", TodoReqests.GetAll)
                 .Produces<List<ToDo>>()
-                .WithTags("To Doe");
+                .WithTags("To Doe")
+                .RequireAuthorization();
 
             //app.MapGet("/todos/{id}", ([FromServices]IToDoService service, [FromRoute] Guid id) => service.GetById(id));
             app.MapGet("/todos/{id}", TodoReqests.GetById)
@@ -22,7 +24,8 @@ namespace ToDosMinimalApi.ToDo
                 .Produces<ToDo>(StatusCodes.Status201Created)
                 .Accepts<ToDo>("application/json")
                 .WithTags("To Doe")
-                .WithValidator<ToDo>();
+                .WithValidator<ToDo>()
+                .RequireAuthorization(); 
 
             //app.MapPut("/todos/{id}",(IToDoService service,Guid id,ToDo toDo ) =>service.Update(toDo));
             app.MapPut("/todos/{id}", TodoReqests.Update)
@@ -56,7 +59,7 @@ namespace ToDosMinimalApi.ToDo
             }
             return Results.Ok(todo);
         }
-
+   
         public static IResult Create(IToDoService service, ToDo toDo, IValidator<ToDo> validator )
         {
           //var validationResult =  validator.Validate(toDo); 

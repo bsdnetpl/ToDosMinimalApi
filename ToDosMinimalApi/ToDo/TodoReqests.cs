@@ -24,8 +24,8 @@ namespace ToDosMinimalApi.ToDo
                 .Produces<ToDo>(StatusCodes.Status201Created)
                 .Accepts<ToDo>("application/json")
                 .WithTags("To Doe")
-                .WithValidator<ToDo>()
-                .RequireAuthorization(); 
+                .WithValidator<ToDo>();
+                //.RequireAuthorization(); 
 
             //app.MapPut("/todos/{id}",(IToDoService service,Guid id,ToDo toDo ) =>service.Update(toDo));
             app.MapPut("/todos/{id}", TodoReqests.Update)
